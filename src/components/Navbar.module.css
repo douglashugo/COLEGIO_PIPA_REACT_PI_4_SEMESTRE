@@ -67,6 +67,12 @@
     cursor: pointer;
     font-weight: bold;
   }
+
+  .custom-link {
+    color: #407D8F;
+    cursor: pointer;
+    font-weight: bold;
+  }
   
   nav ul li:hover {
     transform: translateY(-3px);

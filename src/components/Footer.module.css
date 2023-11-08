@@ -1,0 +1,134 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.footer-distributed {
+    position: fixed;
+    bottom: 0;
+    background-color: #c5c4c4;
+    width: 100%;
+    text-align: center;
+    padding: 30px 40px 20px 40px;
+    margin-top: 80px;
+
+}
+
+.footer-distributed .footer-left, .footer-distributed .footer-center, .footer-distributed .footer-right {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.footer-distributed .footer-left {
+    width: 35%; 
+}
+
+.footer-left a {
+    padding: 4px;
+}
+
+.footer-distributed .footer-center {
+    width: 30%;
+}
+
+.footer-distributed .footer-center p{
+    color: black;
+    font-size: 17px;
+
+    text-align: center;
+    padding: 5px;
+}
+
+.footer-distributed .footer-center .fa-email{
+    color: black;
+}
+
+.footer-distributed .footer-center p {
+    display: inline-block;
+    color: black;
+}
+
+.footer-distributed .footer-right {
+    width: 35%;
+}
+
+.footer-distributed .footer-links {
+    color: black;
+    margin: 15px 10px 15px;
+}
+
+.footer-distributed .footer-links a{
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.footer-distributed .footer-company-name {
+    color: #8f8286;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.footer-distributed .footer-company-about {
+    line-height: 20px;
+    color: black;
+    margin: 0;
+}
+
+.footer-distributed .footer-company-about span{
+    display: block;
+    color: #c5c4c4;
+    font-weight: bold;
+}
+
+.footer-distributed .footer-icons {
+    margin-top: 15px;
+}
+
+.footer-distributed .footer-icons a {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background-color: rgb(28, 28, 28);
+    border-radius: 2px;
+    font-size: 25px;
+    color: #FFF;
+    text-align: center;
+    align-items: center;
+    padding: 0.14rem;
+    margin-right: 6px;
+}
+
+.footer-distributed .footer-icons i {
+    top: 10px;
+}
+
+.footer-distributed .footer-icons a:hover {
+    background-color: #407D8F;
+}
+
+.footer-links a:hover {
+    color: #407D8F;
+}
+
+
+
+@media (max-height:800px){
+    footer{
+        position: static;
+    }
+}
+
+@media (max-width: 880px) {
+    .footer-distributed .footer-links, .footer-distributed .footer-center, .footer-distributed .footer-right {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+    .footer-distributed .footer-center {
+        margin: 0;
+    }
+
+}

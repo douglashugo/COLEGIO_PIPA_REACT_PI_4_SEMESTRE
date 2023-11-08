@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import styles from './Navbar.module.css';
 
 function Navbar() {
@@ -16,10 +17,26 @@ function Navbar() {
         </h1>
         <nav>
           <ul>
-            <li>Home</li>
-            <li>Login</li>
-            <li>Dicas</li>
-            <li>Cadastro</li>
+            <li>
+              <NavLink to="/" className={styles['custom-link']}>
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/" className={styles['custom-link']}>
+                Dicas
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/" className={styles['custom-link']}>
+                Login
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/" className={styles['custom-link']}>
+                Cadastro
+              </NavLink>
+            </li>
           </ul>
         </nav>
         <div className={styles['nav-icon-container']}>
