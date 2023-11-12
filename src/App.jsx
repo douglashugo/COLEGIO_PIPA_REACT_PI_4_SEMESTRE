@@ -1,20 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
-
 //components
-import Navbar from './components/Navbar'
+
 import Footer from './components/Footer'
+import NavbarAdm from './components/Navbar-adm'
 import { BrowserRouter } from 'react-router-dom'
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 function App() {
 
   return (
     <BrowserRouter>
-      <Navbar/>
-      <Footer/>
+      <NavbarAdm />
+      <Footer />
     </BrowserRouter>
   )
 }
