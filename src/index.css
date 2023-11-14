@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -19,8 +23,3 @@ nav button {
   background-color: transparent;
   cursor: pointer;
 }
-
-
-
-
-
