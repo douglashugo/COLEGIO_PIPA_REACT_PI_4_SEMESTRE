@@ -1,17 +1,35 @@
 import { useRef } from 'react';
+import React, { useEffect, useState } from "react";
 import { FaBars, FaTimes } from 'react-icons/fa';
 import "./Navbar-adm.css";
 
 
 function NavbarAdm() {
     const navRef = useRef();
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+          window.removeEventListener("scroll", handleScroll);
+        };
+      }, []);
+
+      const handleScroll = () => {
+        const scrollPosition = window.scrollY;
+        if (scrollPosition > 0) { // Ajuste o valor conforme necessário para definir a posição de deslocamento
+          setIsScrolled(true);
+        } else {
+          setIsScrolled(false);
+        }
+      };
 
     const showNavbar = () => {
         navRef.current.classList.toggle("responsive_nav")
     }
 
     return (
-        <header>
+        <header className={isScrolled ? 'navbar scrolled' : 'navbar'}>
             <h3 className='logo'>Colégio <span>Pipa</span></h3>
             <nav ref={navRef}>
                 <a href="#" title="Ir para a página de Início">Início </a>

@@ -9,6 +9,17 @@ header {
     margin-left: auto;
     margin-right: auto;
   }
+
+  .navbar {
+    width: 100%;   
+  }
+  
+  .scrolled {
+    position: fixed;
+    top: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra para destacar a Navbar fixada */
+    z-index: 1000; /* Garante que a Navbar esteja acima de outros elementos na página */
+  }
   
   .logo {
     color: #7C1B3E;
@@ -41,6 +52,7 @@ header {
     visibility: visible;
     opacity: 0;
     font-size: 1.8rem;
+   
   }
   
   header .nav-btn {
@@ -62,6 +74,7 @@ header {
     background-color: #c5c4c4;
     transition: 1s;
     transform: translateY(-100vh);
+    z-index: 1;
   }
   
   header .responsive_nav {
