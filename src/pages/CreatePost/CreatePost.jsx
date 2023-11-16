@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Select, Input, Button, TextareaAutosize } from "@mui/material";
 
 const Cadastro = () => {
@@ -11,8 +11,18 @@ const Cadastro = () => {
   const [tagsSelecionada, setTagsSelecionada] = useState("");
   const [imagem, setImagem] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false); // Novo estado para verificar se a imagem foi carregada
-
   const [formError, setFormError] = useState("");
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+
+  useEffect(() => {
+    let timeout;
+    if (showSuccessAlert) {
+      timeout = setTimeout(() => {
+        setShowSuccessAlert(false);
+      }, 5000); // Oculta o alerta após 5 segundos
+    }
+    return () => clearTimeout(timeout);
+  }, [showSuccessAlert]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,6 +44,9 @@ const Cadastro = () => {
 
     // Salvando os dados no localStorage
     localStorage.setItem("formData", JSON.stringify(formData));
+
+    // Exibindo o alerta de sucesso
+    setShowSuccessAlert(true);
 
     // Reseta os campos após o envio
     setTitulo("");
@@ -148,10 +161,15 @@ const Cadastro = () => {
                 type="submit"
                 className="mt-8 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out"
               >
-                Cadastrar
+                Publicar
               </button>
             </div>
-            {formError && <p className="error mt-5 text-center">{formError}</p>}
+            {formError && <p className="error mt-5 text-center bg-red-200 text-red-800 p-3 rounded-md mb-5">{formError}</p>}
+            {showSuccessAlert && (
+                <div className="mt-5 text-center bg-green-200 text-green-800 p-3 rounded-md mb-5">
+                  Conteúdo publicado com sucesso!
+                </div>
+              )}
           </form>
         </div>
       </div>
