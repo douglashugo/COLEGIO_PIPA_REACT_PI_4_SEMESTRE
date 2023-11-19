@@ -17,7 +17,7 @@ function NavbarAdm() {
 
       const handleScroll = () => {
         const scrollPosition = window.scrollY;
-        if (scrollPosition > 0) { // Ajuste o valor conforme necessário para definir a posição de deslocamento
+        if (scrollPosition > -100) { // Ajuste o valor conforme necessário para definir a posição de deslocamento
           setIsScrolled(true);
         } else {
           setIsScrolled(false);
@@ -32,8 +32,8 @@ function NavbarAdm() {
         <header className={isScrolled ? 'navbar scrolled' : 'navbar'}>
             <h3 className='logo'>Colégio <span>Pipa</span></h3>
             <nav ref={navRef}>
-                <a href="#" title="Ir para a página de Início">Início </a>
-                <a href="#" title="Criar um novo post">Novo Post</a>
+                <a href="/" title="Ir para a página de Início">Início </a>
+                <a href="/posts/create" title="Criar um novo post">Novo Post</a>
                 <a href="#" title="Ver o Dashboard">Dashboard</a>
                 <a href="#" title="Cadastrar Responsáveis">Cadastrar usuários</a>
                 <a href="#" title="Gerenciar Responsáveis">Gerenciar usuários</a>
