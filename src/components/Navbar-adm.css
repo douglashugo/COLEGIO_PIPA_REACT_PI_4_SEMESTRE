@@ -8,6 +8,7 @@ header {
     font-family: Arial, Helvetica, sans-serif;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 40px;
   }
 
   .navbar {
@@ -15,7 +16,7 @@ header {
   }
   
   .scrolled {
-    position: fixed;
+    position: sticky;
     top: 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra para destacar a Navbar fixada */
     z-index: 1000; /* Garante que a Navbar esteja acima de outros elementos na página */

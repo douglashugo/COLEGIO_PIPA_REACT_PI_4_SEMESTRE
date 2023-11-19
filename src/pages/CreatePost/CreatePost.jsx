@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Select, Input, Button, TextareaAutosize } from "@mui/material";
 
+
+
 const Cadastro = () => {
 
   const [titulo, setTitulo] = useState("");
@@ -33,14 +35,26 @@ const Cadastro = () => {
       return;
     }
 
-    // Criando um objeto com os dados do formulário
-    const formData = {
+    // Obtém os dados existentes do localStorage
+    const existingData = localStorage.getItem("formData");
+    let formData = [];
+
+    if (existingData) {
+      // Se houver dados existentes, converte para um array JavaScript
+      formData = JSON.parse(existingData);
+    }
+
+    // Cria um objeto com os dados do novo formulário
+    const newFormData = {
       titulo,
       descricao,
       categoriaSelecionada,
       tagsSelecionada,
       imagem: imagem ? URL.createObjectURL(imagem) : null
     };
+
+    // Adiciona o novo conteúdo ao array de dados existentes
+    formData.push(newFormData);
 
     // Salvando os dados no localStorage
     localStorage.setItem("formData", JSON.stringify(formData));
@@ -166,10 +180,10 @@ const Cadastro = () => {
             </div>
             {formError && <p className="error mt-5 text-center bg-red-200 text-red-800 p-3 rounded-md mb-5">{formError}</p>}
             {showSuccessAlert && (
-                <div className="mt-5 text-center bg-green-200 text-green-800 p-3 rounded-md mb-5">
-                  Conteúdo publicado com sucesso!
-                </div>
-              )}
+              <div className="mt-5 text-center bg-green-200 text-green-800 p-3 rounded-md mb-5">
+                Conteúdo publicado com sucesso!
+              </div>
+            )}
           </form>
         </div>
       </div>
