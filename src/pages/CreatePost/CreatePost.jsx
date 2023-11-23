@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Select, Input, Button, TextareaAutosize } from "@mui/material";
+import { v4 as uuidv4 } from "uuid"; // Importa a função uuidv4 para gerar IDs únicos
+import { Input, TextareaAutosize } from "@mui/material";
 
 
 
-const Cadastro = () => {
+const CreatePost = () => {
 
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
@@ -35,6 +36,9 @@ const Cadastro = () => {
       return;
     }
 
+    // Gera um ID único para cada novo conteúdo usando a função uuidv4
+    const postId = uuidv4();
+
     // Obtém os dados existentes do localStorage
     const existingData = localStorage.getItem("formData");
     let formData = [];
@@ -46,6 +50,7 @@ const Cadastro = () => {
 
     // Cria um objeto com os dados do novo formulário
     const newFormData = {
+      id: postId, // Adiciona o ID único ao novo conteúdo
       titulo,
       descricao,
       categoriaSelecionada,
@@ -82,7 +87,7 @@ const Cadastro = () => {
 
 
   return (
-    <div className="w-full h-screen flex justify-center items-start my-8">
+    <div className="w-full h-screen flex justify-center items-start my-16">
       <div className="w-full max-w-md p-4">
         <div className="border-b  pb-4">
           <h1 className="text-2xl font-semibold leading-7 text-gray-900 text-center">Cadastro de Conteúdo</h1>
@@ -91,7 +96,7 @@ const Cadastro = () => {
           </p>
         </div>
 
-        <div className="w-full min-h-screen flex flex-col md:flex-column justify-between">
+        <div className="w-full h-max flex flex-col md:flex-column justify-between">
 
           <form onSubmit={handleSubmit}>
             <label className="flex flex-col mt-4">
@@ -173,7 +178,7 @@ const Cadastro = () => {
             <div className="w-full mt-6 flex justify-center ">
               <button
                 type="submit"
-                className="mt-8 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out"
+                className="mt-5 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out"
               >
                 Publicar
               </button>
@@ -192,4 +197,4 @@ const Cadastro = () => {
   );
 };
 
-export default Cadastro;
+export default CreatePost;
