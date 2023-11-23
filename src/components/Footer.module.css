@@ -10,8 +10,6 @@
     width: 100%;
     text-align: center;
     padding: 20px 40px 20px 40px;
-    position: sticky;
-    margin-top: 10px;
 }
 
 .footer-distributed .footer-left, .footer-distributed .footer-center, .footer-distributed .footer-right {
