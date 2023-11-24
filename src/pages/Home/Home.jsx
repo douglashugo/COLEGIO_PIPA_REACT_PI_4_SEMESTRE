@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from "react";
 import BlogPost from "../../components/BlogPost";
+import axios from "axios";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const data = localStorage.getItem("formData");
-      if (data) {
-        const posts = JSON.parse(data);
-        
-        setPosts(posts);
-      } else {
-        []
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/posts");
+
+        if (response.data && response.data.data) {
+          const fetchedPosts = response.data.data;
+          setPosts(fetchedPosts);
+        } else {
+          setPosts([]);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar posts:", error);
       }
     };
-    fetchPosts()
+
+    fetchPosts();
   }, []);
 
   console.log(posts);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid"; // Importa a função uuidv4 para gerar IDs únicos
 import { Input, TextareaAutosize } from "@mui/material";
+import axios from "axios";
 
 
 
@@ -27,7 +28,20 @@ const CreatePost = () => {
     return () => clearTimeout(timeout);
   }, [showSuccessAlert]);
 
-  const handleSubmit = (e) => {
+  // Mapeamento de categorias e tags para IDs correspondentes
+  const categoriaParaId = {
+    "Dicas": "1",
+    "Avisos": "2",
+    // Adicione outras categorias conforme necessário
+  };
+
+  const tagsParaId = {
+    "Alimentação": "1",
+    "Atividade física": "2",
+    // Adicione outras tags conforme necessário
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError("");
 
@@ -36,55 +50,47 @@ const CreatePost = () => {
       return;
     }
 
-    // Gera um ID único para cada novo conteúdo usando a função uuidv4
-    const postId = uuidv4();
+    try {
+      const formData = new FormData();
 
-    // Obtém os dados existentes do localStorage
-    const existingData = localStorage.getItem("formData");
-    let formData = [];
+      const imagemIdFixo = "1"; // Define o ID fixo para a imagem
 
-    if (existingData) {
-      // Se houver dados existentes, converte para um array JavaScript
-      formData = JSON.parse(existingData);
+
+      formData.append("title", titulo);
+      formData.append("description", descricao);
+
+      // Mapeia a categoria selecionada para o ID correspondente
+      const categoriaId = categoriaParaId[categoriaSelecionada];
+      formData.append("category_id", categoriaId || "");
+
+      // Mapeia a tag selecionada para o ID correspondente
+      const tagId = tagsParaId[tagsSelecionada];
+      formData.append("tag_id", tagId || "");
+
+      
+      formData.append("image_id", imagemIdFixo);
+      
+
+      await axios.post("http://127.0.0.1:8000/api/posts", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setShowSuccessAlert(true);
+
+      setTitulo("");
+      setDescricao("");
+      setCategoriaSelecionada("");
+      setTagsSelecionada("");
+      setImagem(null);
+      setImageLoaded(false);
+    } catch (error) {
+      setFormError("Erro ao enviar o conteúdo. Por favor, tente novamente.");
+      console.error("Erro ao enviar conteúdo:", error);
     }
 
-    // Cria um objeto com os dados do novo formulário
-    const newFormData = {
-      id: postId, // Adiciona o ID único ao novo conteúdo
-      titulo,
-      descricao,
-      categoriaSelecionada,
-      tagsSelecionada,
-      imagem: imagem ? URL.createObjectURL(imagem) : null
-    };
-
-    // Adiciona o novo conteúdo ao array de dados existentes
-    formData.push(newFormData);
-
-    // Salvando os dados no localStorage
-    localStorage.setItem("formData", JSON.stringify(formData));
-
-    // Exibindo o alerta de sucesso
-    setShowSuccessAlert(true);
-
-    // Reseta os campos após o envio
-    setTitulo("");
-    setDescricao("");
-    setCategoriaSelecionada("");
-    setTagsSelecionada("");
-    setImagem(null);
-    setImageLoaded(false); // Reinicializa o estado da imagem após o envio do formulário
-
   };
-
-  const handleImageChange = (e) => {
-    const selectedImage = e.target.files[0];
-    if (selectedImage) {
-      setImagem(selectedImage);
-      setImageLoaded(true); // Define como verdadeiro se uma imagem for selecionada
-    }
-  };
-
 
   return (
     <div className="w-full h-screen flex justify-center items-start my-16">
@@ -164,7 +170,6 @@ const CreatePost = () => {
                   id="upload"
                   type="file"
                   accept="image/png,image/jpeg"
-                  onChange={handleImageChange}
                   className="hidden"
                 />
                 {imageLoaded && imagem && (
