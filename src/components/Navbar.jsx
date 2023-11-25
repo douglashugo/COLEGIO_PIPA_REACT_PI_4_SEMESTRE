@@ -14,7 +14,8 @@ function Navbar() {
         <header>
             <h3 className='logo'>Colégio <span>Pipa</span></h3>
             <nav ref={navRef}>
-                <a href="#" title="Ir para a página de Início">Início </a>
+                <a href="/" title="Ir para a página de Início">Início </a>
+                <a href="/login" title="Login">Login</a>
                 <a href="#" title="Editar cadastro">Editar cadastro</a>
                 <a href="#" title="Sair">Sair</a>
                 <button
