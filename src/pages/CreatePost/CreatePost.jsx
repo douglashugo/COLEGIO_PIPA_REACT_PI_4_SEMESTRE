@@ -50,10 +50,15 @@ const CreatePost = () => {
       return;
     }
 
+    if (!imageLoaded) {
+      setFormError("Por favor, carregue uma imagem");
+      return;
+    }
+
     try {
       const formData = new FormData();
 
-      const imagemIdFixo = "1"; // Define o ID fixo para a imagem
+      //const imagemIdFixo = "1"; // Define o ID fixo para a imagem
 
 
       formData.append("title", titulo);
@@ -66,11 +71,10 @@ const CreatePost = () => {
       // Mapeia a tag selecionada para o ID correspondente
       const tagId = tagsParaId[tagsSelecionada];
       formData.append("tag_id", tagId || "");
-
       
-      formData.append("image_id", imagemIdFixo);
-      
-
+      formData.append("image_url", imagem ? URL.createObjectURL(imagem) : null);
+      formData.append("image", imagem);
+            
       await axios.post("http://127.0.0.1:8000/api/posts", formData, {
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +93,14 @@ const CreatePost = () => {
       setFormError("Erro ao enviar o conteúdo. Por favor, tente novamente.");
       console.error("Erro ao enviar conteúdo:", error);
     }
+  };
 
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0];
+    if (selectedImage) {
+      setImagem(selectedImage);
+      setImageLoaded(true); // Define como verdadeiro se uma imagem for selecionada
+    }
   };
 
   return (
@@ -170,6 +181,7 @@ const CreatePost = () => {
                   id="upload"
                   type="file"
                   accept="image/png,image/jpeg"
+                  onChange={handleImageChange}
                   className="hidden"
                 />
                 {imageLoaded && imagem && (
