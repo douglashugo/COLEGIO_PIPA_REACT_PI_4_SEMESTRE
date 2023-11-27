@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 
 const Register = () => {
+
+    const [permission, setPermission] = useState(["Comum", "Admin"]);
+    const [permissionSelecionada, setPermissionSelecionada] = useState("");
+    const [passwordError, setPasswordError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false); // Estado para controlar a exibição da senha
     const [formData, setFormData] = useState({
         nome: '',
         email: '',
         telefone: '',
         cpf: '',
-        tipoUsuario: 'comum',
+        tipoUsuario: '',
         senha: '',
+        repetirSenha: '',
     });
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -16,21 +23,69 @@ const Register = () => {
             ...formData,
             [name]: value,
         });
+
+        // Verificar se as senhas coincidem ao digitar
+        if (name === 'senha' || name === 'repetirSenha') {
+            if (formData.senha !== formData.repetirSenha) {
+                setPasswordError(true);
+            } else {
+                setPasswordError(false);
+            }
+        }
     };
 
-    const handleSubmit = (e) => {
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Aqui você pode enviar os dados do formulário para o backend ou executar a lógica necessária
-        console.log(formData); // Exemplo: console.log para exibir os dados no console
-        // Limpar os campos após o envio dos dados (opcional)
-        setFormData({
-            nome: '',
-            email: '',
-            telefone: '',
-            cpf: '',
-            tipoUsuario: 'comum',
-            senha: '',
-        });
+
+        // Verificar se as senhas coincidem antes de enviar o formulário
+        if (formData.senha !== formData.repetirSenha) {
+            setPasswordError(true);
+            return;
+        }
+
+        const requestBody = {
+            name: formData.nome,
+            email: formData.email,
+            phone_number: formData.telefone,
+            cpf: formData.cpf,
+            permission_id: getPermissionId(permissionSelecionada),
+            password: formData.senha,
+        };
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                // Lógica para lidar com sucesso (ex: redirecionamento, exibição de mensagem)
+                console.log('Usuário cadastrado com sucesso!');
+            } else {
+                // Lógica para lidar com erro na requisição
+                console.error('Erro ao cadastrar usuário:', response.statusText);
+            }
+        } catch (error) {
+            // Lógica para lidar com erro de rede ou outros erros
+            console.error('Erro ao realizar a requisição:', error);
+        }
+    };
+
+    const getPermissionId = (tipoUsuario) => {
+        // Mapeamento de tipos de usuário para IDs correspondentes
+        // Certifique-se de ter adicionado todas as categorias conforme necessário
+        const permissionId = {
+            Comum: 1,
+            Admin: 2,
+            // Adicione outras categorias conforme necessário
+        };
+        return permissionId[tipoUsuario] || null; // Retornar null ou outro valor padrão para lidar com casos não mapeados
     };
 
     return (
@@ -51,7 +106,7 @@ const Register = () => {
                         onChange={handleChange}
                     />
                 </div>
-        
+
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                         Email:
@@ -103,11 +158,17 @@ const Register = () => {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="tipoUsuario"
                         name="tipoUsuario"
-                        value={formData.tipoUsuario}
-                        onChange={handleChange}
+                        value={permissionSelecionada}
+                        onChange={(e) => setPermissionSelecionada(e.target.value)}
                     >
-                        <option value="comum">Comum</option>
-                        <option value="admin">Admin</option>
+                        <option value="">
+                            Selecione uma permissão
+                        </option>
+                        {permission.map((permission) => (
+                            <option key={permission} value={permission}>
+                                {permission}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div className="mb-4">
@@ -123,8 +184,33 @@ const Register = () => {
                         value={formData.senha}
                         onChange={handleChange}
                     />
+                    <button
+                            type="button"
+                            className="focus:outline-none ml-2"
+                            onClick={toggleShowPassword}
+                        >
+                            {showPassword ? 'Ocultar' : 'Mostrar'}
+                        </button>
                 </div>
-                
+
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="repetirSenha">
+                        Repetir Senha:
+                    </label>
+                    <input
+                        className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${passwordError ? 'border-red-500' : ''}`}
+                        id="repetirSenha"
+                        type="password"
+                        placeholder="Repetir Senha"
+                        name="repetirSenha"
+                        value={formData.repetirSenha}
+                        onChange={handleChange}
+                    />
+                    {passwordError && (
+                        <p className="text-red-500 text-xs italic">As senhas não coincidem. Por favor, insira senhas iguais.</p>
+                    )}
+                </div>
+
                 <div className="flex items-center justify-between">
                     <button
                         className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-3"
