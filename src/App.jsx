@@ -10,7 +10,7 @@ import Home from './pages/Home/Home';
 import Post from './pages/Post/Post';
 import CreatePost from "./pages/CreatePost/CreatePost";
 import Register from "./pages/Register/Register";
-import Login from "./pages/Login/Login"
+import Login from "./pages/Login/Login";
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { FaBars, FaTimes } from 'react-icons/fa';

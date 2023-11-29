@@ -9,6 +9,30 @@ const Login = () => {
   const[senha, setSenha] = useState("")
   const[erro, setError] = useState("")
 
+  const [formData, setFormData] = useState({
+    nome: '',
+    email: '',
+    telefone: '',
+    cpf: '',
+    tipoUsuario: 'comum',
+    senha: '',
+});
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Add your login logic here
+    console.log('Form submitted:', formData);
+    // Reset the form data after submission if needed
+    setFormData({ email: '', senha: '' });
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   return (
     <div>
