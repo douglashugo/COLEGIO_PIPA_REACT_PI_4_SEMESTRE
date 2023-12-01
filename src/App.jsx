@@ -22,11 +22,11 @@ function App() {
     <BrowserRouter>
       <NavbarAdm />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Login />} />
         <Route path="/posts/create" element={<CreatePost />} />
         <Route path="/posts/:id" element={<Post />} />
         <Route path="/register/create" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
       <Footer />
     </BrowserRouter>

@@ -1,9 +1,9 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 
 
 const Login = () => {
-
 
   const[email, setEmail] = useState("")
   const[senha, setSenha] = useState("")
@@ -12,9 +12,6 @@ const Login = () => {
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
-    telefone: '',
-    cpf: '',
-    tipoUsuario: 'comum',
     senha: '',
 });
 
@@ -76,6 +73,7 @@ const Login = () => {
                       </button>
                   </div>
               </form>
+              <Link to="/register/create" className="border border-black text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"> Criar uma conta </Link>
       </div>
     </div>
   )
