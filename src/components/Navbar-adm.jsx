@@ -34,10 +34,9 @@ function NavbarAdm() {
             <nav ref={navRef}>
                 <a href="/" title="Ir para a página de Início">Início </a>
                 <a href="/posts/create" title="Criar um novo post">Novo Post</a>
-                <a href="#" title="Ver o Dashboard">Dashboard</a>
+                <a href="#" title="Ver o Dashboard">Gerenciar Post</a>
                 <a href="/register/create" title="Cadastrar Responsáveis">Cadastrar usuários</a>
-                <a href="#" title="Gerenciar Responsáveis">Gerenciar usuários</a>
-                <a href="#" title="Editar cadastro">Editar cadastro</a>
+                <a href="/dashboard-users" title="Gerenciar Responsáveis">Gerenciar usuários</a>
                 <a href="#" title="Sair">Sair</a>
                 <button
                     type='button' 

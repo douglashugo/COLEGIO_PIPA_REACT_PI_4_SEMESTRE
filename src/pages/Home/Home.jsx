@@ -28,7 +28,6 @@ const Home = () => {
 
   return (
     <div className="w-full h-screen flex flex-col items-center my-16">
-      <h1 className="text-3xl font-semibold leading-7 text-gray-900 text-center">Blog</h1>
       {posts.length > 0 ? (
         <div className="max-w-md p-4">
           {posts.map((post, index) => (

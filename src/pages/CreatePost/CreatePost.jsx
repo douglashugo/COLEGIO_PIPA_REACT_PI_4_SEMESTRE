@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid"; // Importa a função uuidv4 para gerar IDs únicos
 import { Input, TextareaAutosize } from "@mui/material";
 import axios from "axios";
 

@@ -5,7 +5,6 @@ const Register = () => {
     const [permission, setPermission] = useState(["Comum", "Admin"]);
     const [permissionSelecionada, setPermissionSelecionada] = useState("");
     const [passwordError, setPasswordError] = useState(false);
-    const [showPassword, setShowPassword] = useState(false); // Estado para controlar a exibição da senha
     const [formData, setFormData] = useState({
         nome: '',
         email: '',
@@ -34,9 +33,6 @@ const Register = () => {
         }
     };
 
-    const toggleShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -91,7 +87,7 @@ const Register = () => {
     return (
         <div className="w-full h-screen max-w-md mx-auto my-16">
             <h1 className="text-2xl font-semibold leading-7 text-gray-900 text-center mb-4">Cadastrar Usuário</h1>
-            <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <form onSubmit={handleSubmit} className="bg-white shadow-gray-500 shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nome">
                         Nome:
@@ -184,13 +180,6 @@ const Register = () => {
                         value={formData.senha}
                         onChange={handleChange}
                     />
-                    <button
-                            type="button"
-                            className="focus:outline-none ml-2"
-                            onClick={toggleShowPassword}
-                        >
-                            {showPassword ? 'Ocultar' : 'Mostrar'}
-                        </button>
                 </div>
 
                 <div className="mb-4">
