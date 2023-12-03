@@ -11,6 +11,7 @@ import Post from './pages/Post/Post';
 import CreatePost from "./pages/CreatePost/CreatePost";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
+import Dashboard from './pages/Dashboard/Dashboard';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { FaBars, FaTimes } from 'react-icons/fa';
@@ -22,11 +23,15 @@ function App() {
     <BrowserRouter>
       <NavbarAdm />
       <Routes>
+      
         <Route path="/" element={<Login />} />
         <Route path="/posts/create" element={<CreatePost />} />
+         <Route path="/home" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+    
         <Route path="/posts/:id" element={<Post />} />
         <Route path="/register/create" element={<Register />} />
-        <Route path="/home" element={<Home />} />
+       
       </Routes>
       <Footer />
     </BrowserRouter>
