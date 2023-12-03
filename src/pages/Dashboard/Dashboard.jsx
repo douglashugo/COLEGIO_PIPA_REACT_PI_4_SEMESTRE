@@ -5,17 +5,17 @@ import { Link } from 'react-router-dom';
 // import { getPublicacoes, deletarPublicacao } from './api';  backend
 
 //hooks
-import { useAuthValue } from "../../contexts/AuthContext";
+//import { useAuthValue } from "../../contexts/AuthContext";
 import { useFetchDocuments } from  '../../hooks/useFetchDocuments';
 
 
 
 const Dashboard = () => {
 
-    const {user} = useAuthValue();
-    const uid = user.uid;
+   // const {user} = useAuthValue();
+   // const uid = user.uid;
 
-    const {documents: posts, loading} = useFetchDocuments("posts", null, uid);
+    const {documents: posts, loading} = useFetchDocuments("posts", null); // colocar uid para validar
 
     const deleteDocument = (id) =>{
         //funcao delete
