@@ -26,7 +26,7 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
 
       setLoading(true);
 
-      const collectionRef = await collection(db, docCollection);
+      //const collectionRef = await collection(db, docCollection); //coolection do firebase
 
       try {
         let q;
