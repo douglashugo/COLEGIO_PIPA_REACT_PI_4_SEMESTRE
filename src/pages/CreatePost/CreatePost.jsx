@@ -103,7 +103,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="w-full h-screen flex justify-center items-start my-16">
+    <div className="w-full h-max flex justify-center items-start my-16">
       <div className="w-full max-w-md p-4">
         <div className="border-b  pb-4">
           <h1 className="text-2xl font-semibold leading-7 text-gray-900 text-center">Cadastro de Conteúdo</h1>

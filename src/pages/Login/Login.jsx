@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Importando o axios para fazer requisições HTTP
 import { Navigate } from 'react-router-dom'; // Importando Navigate do react-router-dom
+import { useAuth } from "../../contexts/AuthContext";
 
 const Login = () => {
+    const { login } = useAuth();
     const [formData, setFormData] = useState({
         email: '',
         senha: '',
@@ -35,6 +37,7 @@ const Login = () => {
 
                 if (usuarioEncontrado) {
                     console.log('Usuário encontrado:', usuarioEncontrado);
+                    login();
                     setRedirectToHome(true); // Ativa o redirecionamento para '/home'
                 } else {
                     setError('Usuário ou senha incorretos.');
