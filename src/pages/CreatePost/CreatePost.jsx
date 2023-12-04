@@ -191,10 +191,10 @@ const CreatePost = () => {
               </div>
             </label>
 
-            <div className="w-full mt-6 flex justify-center ">
+            <div className="w-full mt-6">
               <button
                 type="submit"
-                className="mt-5 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out"
+                className="mt-1 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out"
               >
                 Publicar
               </button>

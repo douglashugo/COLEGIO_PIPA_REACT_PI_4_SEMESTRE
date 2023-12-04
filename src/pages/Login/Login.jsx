@@ -72,7 +72,7 @@ const Login = () => {
         <div>
             <div className="w-full h-screen max-w-md mx-auto my-16">
                 <h1 className="text-2xl font-semibold leading-7 text-gray-900 text-center mb-4">Faça seu login</h1>
-                <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <form onSubmit={handleSubmit} className="bg-white shadow-gray-500 shadow-md rounded px-8 pt-6 pb-8 mb-4">
                     {showErrorPopup && (
                         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
                             <strong className="font-bold">Erro:</strong>
