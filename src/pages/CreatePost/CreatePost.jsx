@@ -57,7 +57,7 @@ const CreatePost = () => {
     try {
       const formData = new FormData();
 
-      //const imagemIdFixo = "1"; // Define o ID fixo para a imagem
+      const imagemIdFixo = "1"; // Define o ID fixo para a imagem
 
 
       formData.append("title", titulo);
@@ -71,10 +71,10 @@ const CreatePost = () => {
       const tagId = tagsParaId[tagsSelecionada];
       formData.append("tag_id", tagId || "");
       
-      formData.append("image_url", imagem ? URL.createObjectURL(imagem) : null);
-      formData.append("image", imagem);
+      formData.append("image_id", imagemIdFixo ? imagemIdFixo : null);
+      //formData.append("image", imagem);
             
-      await axios.post("http://127.0.0.1:8000/api/posts", formData, {
+      await axios.post("https://colegiopipabackend.brunorisso.com/api/posts", formData, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -112,7 +112,7 @@ const CreatePost = () => {
           </p>
         </div>
 
-        <div className="w-full h-max flex flex-col md:flex-column justify-between">
+        <div className="w-full h-max flex flex-col md:flex-column justify-between bg-white shadow-gray-500 shadow-md rounded px-8 pt-6 pb-8 mb-4">
 
           <form onSubmit={handleSubmit}>
             <label className="flex flex-col mt-4">

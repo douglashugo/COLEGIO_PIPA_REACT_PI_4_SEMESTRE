@@ -7,7 +7,7 @@ import "./Navbar-adm.css";
 function NavbarAdm() {
     const navRef = useRef();
     const [isScrolled, setIsScrolled] = useState(false);
-
+    
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
         return () => {
@@ -32,12 +32,12 @@ function NavbarAdm() {
         <header className={isScrolled ? 'navbar scrolled' : 'navbar'}>
             <h3 className='logo'>Colégio <span>Pipa</span></h3>
             <nav ref={navRef}>
-                <a href="/" title="Ir para a página de Início">Início </a>
+                <a href="/home" title="Ir para a página de Início">Início </a>
                 <a href="/posts/create" title="Criar um novo post">Novo Post</a>
-                <a href="#" title="Ver o Dashboard">Gerenciar Post</a>
-                <a href="/register/create" title="Cadastrar Responsáveis">Cadastrar usuários</a>
-                <a href="/dashboard-users" title="Gerenciar Responsáveis">Gerenciar usuários</a>
-                <a href="#" title="Sair">Sair</a>
+                <a href="/dashboard-posts" title="Dashboard Conteúdo">Gerenciar Conteúdo</a>
+                <a href="/register/create" title="Cadastrar Responsáveis">Cadastrar Usuários</a>
+                <a href="/dashboard-users" title="Gerenciar Responsáveis">Gerenciar Usuários</a>
+                <a href="/" title="Sair">Sair</a>
                 <button
                     type='button' 
                     title="Fechar menu"

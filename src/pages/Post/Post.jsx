@@ -8,13 +8,12 @@ const Post = () => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/posts/`);
+                const response = await fetch(`https://colegiopipabackend.brunorisso.com/api/posts/${postId}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }
                 const data = await response.json();
-                const selectedPost = data.data.find((post) => post.id.toString() === postId);
-                setPost(selectedPost);
+                setPost(data.data); // Define o post diretamente, pois a resposta agora é um único objeto, não um array
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -30,9 +29,9 @@ const Post = () => {
                     <div>
                         <h1 className="text-4xl font-semibold leading-7 text-gray-900 text-center break-all mb-10">{post.title}</h1>
                         <p className="mt-1 text-lg leading-6 text-gray-600 text-center break-all">{post.description}</p>
-                        {post.image_url && (
+                        {post.image_id && (
                             <div className="flex justify-center mt-4">
-                                <img src={post.imagem} alt="Imagem do post" className="max-w-full h-auto" />
+                                <img src={post.image_id} alt="Imagem do post" className="max-w-full h-auto" />
                             </div>
                         )}
                     </div>

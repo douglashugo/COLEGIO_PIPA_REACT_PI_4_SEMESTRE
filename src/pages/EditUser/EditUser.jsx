@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const EditUser = () => {
   const { id: userId } = useParams();
@@ -11,11 +14,13 @@ const EditUser = () => {
     cpf: '',
     permission: '',
   });
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/users/${userId}`);
+        const response = await fetch(`https://colegiopipabackend.brunorisso.com/api/users/${userId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
@@ -46,7 +51,7 @@ const EditUser = () => {
   const handleSave = async () => {
     try {
       // Aqui você deve enviar os dados editados para a API
-      const response = await fetch(`http://127.0.0.1:8000/api/users/${userId}`, {
+      const response = await fetch(`https://colegiopipabackend.brunorisso.com/api/users/update/${userId}`, {
         method: 'PUT', // Ou outro método dependendo da sua API
         headers: {
           'Content-Type': 'application/json',
@@ -55,12 +60,16 @@ const EditUser = () => {
       });
 
       if (response.ok) {
-        // Lógica para lidar com o salvamento bem-sucedido
-        console.log('Usuário atualizado com sucesso!');
+        setSuccessMessage('Usuário atualizado com sucesso!');
+        setErrorMessage('');
       } else {
+        setSuccessMessage('');
+        setErrorMessage('Erro ao atualizar usuário');
         console.error('Erro ao atualizar usuário:', response.statusText);
       }
     } catch (error) {
+      setSuccessMessage('');
+      setErrorMessage('Erro ao realizar a requisição');
       console.error('Erro ao realizar a requisição:', error);
     }
   };
@@ -68,7 +77,7 @@ const EditUser = () => {
   
 
   if (!user) {
-    return <p>Carregando informações do usuário...</p>;
+    return <p className="w-full h-screen flex justify-center items-start my-16">Carregando informações do usuário...</p>;
   }
 
   return (
@@ -130,6 +139,8 @@ const EditUser = () => {
         <button onClick={handleSave} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
           Salvar
         </button>
+        {successMessage && <p className="mt-5 text-center bg-green-200 text-green-800 p-3 rounded-md mb-5">{successMessage}</p>}
+        {errorMessage && <p className="error mt-5 text-center bg-red-200 text-red-800 p-3 rounded-md mb-5">{errorMessage}</p>}
       </div>
     </div>
   );
