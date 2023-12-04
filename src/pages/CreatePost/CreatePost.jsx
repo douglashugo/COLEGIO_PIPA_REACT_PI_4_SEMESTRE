@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid"; // Importa a função uuidv4 para gerar IDs únicos
 import { Input, TextareaAutosize } from "@mui/material";
 import axios from "axios";
 
@@ -50,6 +49,11 @@ const CreatePost = () => {
       return;
     }
 
+    if (!imageLoaded) {
+      setFormError("Por favor, carregue uma imagem");
+      return;
+    }
+
     try {
       const formData = new FormData();
 
@@ -66,12 +70,11 @@ const CreatePost = () => {
       // Mapeia a tag selecionada para o ID correspondente
       const tagId = tagsParaId[tagsSelecionada];
       formData.append("tag_id", tagId || "");
-
       
-      formData.append("image_id", imagemIdFixo);
-      
-
-      await axios.post("http://127.0.0.1:8000/api/posts", formData, {
+      formData.append("image_id", imagemIdFixo ? imagemIdFixo : null);
+      //formData.append("image", imagem);
+            
+      await axios.post("https://colegiopipabackend.brunorisso.com/api/posts", formData, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -89,7 +92,14 @@ const CreatePost = () => {
       setFormError("Erro ao enviar o conteúdo. Por favor, tente novamente.");
       console.error("Erro ao enviar conteúdo:", error);
     }
+  };
 
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0];
+    if (selectedImage) {
+      setImagem(selectedImage);
+      setImageLoaded(true); // Define como verdadeiro se uma imagem for selecionada
+    }
   };
 
   return (
@@ -102,7 +112,7 @@ const CreatePost = () => {
           </p>
         </div>
 
-        <div className="w-full h-max flex flex-col md:flex-column justify-between">
+        <div className="w-full h-max flex flex-col md:flex-column justify-between bg-white shadow-gray-500 shadow-md rounded px-8 pt-6 pb-8 mb-4">
 
           <form onSubmit={handleSubmit}>
             <label className="flex flex-col mt-4">
@@ -170,6 +180,7 @@ const CreatePost = () => {
                   id="upload"
                   type="file"
                   accept="image/png,image/jpeg"
+                  onChange={handleImageChange}
                   className="hidden"
                 />
                 {imageLoaded && imagem && (
