@@ -58,9 +58,6 @@ const CreatePost = () => {
     try {
       const formData = new FormData();
 
-      const imagemIdFixo = "1"; // Define o ID fixo para a imagem
-
-
       formData.append("title", titulo);
       formData.append("description", descricao);
 
@@ -72,7 +69,7 @@ const CreatePost = () => {
       const tagId = tagsParaId[tagsSelecionada];
       formData.append("tag_id", tagId || "");
       
-      formData.append("image_id", imagemIdFixo ? imagemIdFixo : null);
+      formData.append("image_id", imagem ? imagem : null);
       //formData.append("image", imagem);
             
       await axiosInstance.post("https://colegiopipabackend.brunorisso.com/api/posts", formData, {
