@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BlogPost from "../../components/BlogPost";
 import axios from "axios";
+import axiosInstance from "../../../axiosConfig";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -8,7 +9,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("https://colegiopipabackend.brunorisso.com/api/posts");
+        const response = await axiosInstance.get("https://colegiopipabackend.brunorisso.com/api/posts");
 
         if (response.data && response.data.data) {
           const fetchedPosts = response.data.data;

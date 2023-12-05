@@ -2,11 +2,13 @@ import { useRef } from 'react';
 import React, { useEffect, useState } from "react";
 import { FaBars, FaTimes } from 'react-icons/fa';
 import "./Navbar-adm.css";
+import AuthService from './AuthService';
 
 
 function NavbarAdm() {
     const navRef = useRef();
     const [isScrolled, setIsScrolled] = useState(false);
+    const { logout } = AuthService;
     
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
@@ -37,23 +39,23 @@ function NavbarAdm() {
                 <a href="/dashboard-posts" title="Dashboard Conteúdo">Gerenciar Conteúdo</a>
                 <a href="/register/create" title="Cadastrar Responsáveis">Cadastrar Usuários</a>
                 <a href="/dashboard-users" title="Gerenciar Responsáveis">Gerenciar Usuários</a>
-                <a href="/" title="Sair">Sair</a>
+                <a href="/" title="Sair" onClick={logout}>Sair</a>
                 <button
-                    type='button' 
+                    type='button'
                     title="Fechar menu"
-                    className='nav-btn nav-close-btn' 
+                    className='nav-btn nav-close-btn'
                     onClick={showNavbar}
                 >
-                  <FaTimes/>   
+                  <FaTimes/>
                 </button>
             </nav>
             <button
-                type='button' 
+                type='button'
                  title='Abrir menu'
-                className='nav-btn' 
+                className='nav-btn'
                 onClick={showNavbar}
             >
-              <FaBars />  
+              <FaBars />
             </button>
         </header>
     );

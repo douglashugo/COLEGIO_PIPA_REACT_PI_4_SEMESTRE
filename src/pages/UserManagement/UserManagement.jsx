@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
+import axiosInstance from '../../../axiosConfig';
 
 const UserManagement = () => {
     const [users, setUsers] = useState([]); // Estado para armazenar usuários
@@ -7,8 +8,8 @@ const UserManagement = () => {
     // Função para carregar os usuários (simulando uma chamada à API)
     const fetchUsers = async () => {
         try {
-            const response = await fetch('https://colegiopipabackend.brunorisso.com/api/users');
-            const data = await response.json();
+            const response = await axiosInstance.get('https://colegiopipabackend.brunorisso.com/api/users');
+            const data = await response.data;
 
             // Verifica se a resposta da API tem a chave "data" e se contém uma matriz de usuários
             if (data && data.success && data.data && Array.isArray(data.data)) {
@@ -33,11 +34,10 @@ const UserManagement = () => {
         // Lógica para excluir um usuário na API
         try {
             // Substitua essa lógica pelo código de chamada à sua API real para exclusão do usuário
-            const response = await fetch(`https://colegiopipabackend.brunorisso.com/api/users/${userId}`, {
-                method: 'DELETE',
-            });
+            const response = await axiosInstance.delete(`https://colegiopipabackend.brunorisso.com/api/users/delete/${userId}`);
+            const data = response.data;
 
-            if (response.ok) {
+            if (data.success) {
                 // Atualiza a lista de usuários após a exclusão
                 fetchUsers();
                 setSelectedUser(null); // Limpa o estado de usuário selecionado
