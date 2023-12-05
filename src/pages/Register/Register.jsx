@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axiosInstance from '../../../axiosConfig';
 
 const Register = () => {
 
@@ -30,7 +31,7 @@ const Register = () => {
             e.preventDefault();
             setFormError("");
 
-            if (!formData.nome || !formData.email || !formData.telefone || !formData.cpf || !formData.tipoUsuario || !formData.senha || !formData.repetirSenha) {
+            if (!formData.nome || !formData.email || !formData.telefone || !formData.cpf || !permissionSelecionada || !formData.senha || !formData.repetirSenha) {
                 setFormError("Por favor, preencha todos os campos");
                 return;
             }
@@ -53,15 +54,10 @@ const Register = () => {
 
 
             try {
-                const response = await fetch('https://colegiopipabackend.brunorisso.com/api/users', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(requestBody),
-                });
+                const response = await axiosInstance.post('https://colegiopipabackend.brunorisso.com/api/users', requestBody);
+                const data = response.data;
 
-                if (response.ok) {
+                if (data.success) {
                     // Lógica para lidar com sucesso (ex: redirecionamento, exibição de mensagem)
                     setCadastroSucesso(true); // Define o estado para mostrar a mensagem de sucesso
                     setErroCadastro(false);
@@ -82,8 +78,8 @@ const Register = () => {
             // Mapeamento de tipos de usuário para IDs correspondentes
             // Certifique-se de ter adicionado todas as categorias conforme necessário
             const permissionId = {
-                Comum: 1,
-                Admin: 2,
+                Comum: 2,
+                Admin: 1,
                 // Adicione outras categorias conforme necessário
             };
             return permissionId[tipoUsuario] || null; // Retornar null ou outro valor padrão para lidar com casos não mapeados

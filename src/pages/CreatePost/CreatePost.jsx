@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Input, TextareaAutosize } from "@mui/material";
 import axios from "axios";
+import axiosInstance from "../../../axiosConfig";
 
 
 
@@ -74,7 +75,7 @@ const CreatePost = () => {
       formData.append("image_id", imagemIdFixo ? imagemIdFixo : null);
       //formData.append("image", imagem);
             
-      await axios.post("https://colegiopipabackend.brunorisso.com/api/posts", formData, {
+      await axiosInstance.post("https://colegiopipabackend.brunorisso.com/api/posts", formData, {
         headers: {
           "Content-Type": "application/json",
         },
