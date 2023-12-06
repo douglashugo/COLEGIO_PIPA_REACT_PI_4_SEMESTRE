@@ -15,6 +15,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { FaBars, FaTimes } from 'react-icons/fa';
+import EditPost from "./pages/EditPost/EditPost.1";
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
         <Route path="/posts/create" element={<CreatePost />} />
          <Route path="/home" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
-    
+        <Route path="/posts/edit/:id" element={<EditPost/>} />
         <Route path="/posts/:id" element={<Post />} />
         <Route path="/register/create" element={<Register />} />
        
