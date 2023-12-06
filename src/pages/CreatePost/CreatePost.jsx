@@ -70,7 +70,6 @@ const CreatePost = () => {
       formData.append("tag_id", tagId || "");
       
       formData.append("image", imagem ? imagem : null);
-      //formData.append("image", imagem);
             
       await axiosInstance.post("https://colegiopipabackend.brunorisso.com/api/posts", formData, {
         headers: {

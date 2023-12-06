@@ -31,7 +31,7 @@ const Home = () => {
   console.log(posts);
 
   return (
-    <div className="w-full h-screen flex flex-col items-center my-16">
+    <div className="w-full h-max flex flex-col items-center my-16">
       {loading ? ( // Mostra um indicador de carregamento enquanto os dados estão sendo buscados
         <p className="text-center text-xl">Carregando página...</p>
       ) : (

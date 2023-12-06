@@ -12,7 +12,7 @@ const EditPost = () => {
         title: '',
         description: '',
         category_id: '',
-        tag_id: ''
+        tag_id: '',
     });
 
     const [successMessage, setSuccessMessage] = useState('');
@@ -26,14 +26,15 @@ const EditPost = () => {
                 if (!data.success) {
                     throw new Error('Failed to fetch data');
                 }
-                setPost(data.data[0]); // Definindo o usuário retornado pela API
+
+                setPost(data.data[0]);
                 setPostData({
                     title: data.data[0].title,
                     description: data.data[0].description,
                     category_id: data.data[0].category_id.toString(),
-                    tag_id: data.data[0].tag_id.toString(),
-
+                    tag_id: data.data[0].tag_id.toString()
                 });
+
             } catch (error) {
                 console.error('Erro ao buscar informações do post:', error);
                 // Lidar com erros...
@@ -53,17 +54,31 @@ const EditPost = () => {
 
 
     const handleSave = async () => {
+
         try {
-            console.log(postData);
-            const response = await axiosInstance.post(`https://colegiopipabackend.brunorisso.com/api/posts/update/${postId}`, postData);
+
+            const formData = new FormData();
+
+            formData.append("title", postData.title);
+            formData.append("description", postData.description);
+            formData.append("category_id", postData.category_id);
+            formData.append("tag_id", postData.tag_id);
+
+            const response = await axiosInstance.post(`https://colegiopipabackend.brunorisso.com/api/posts/update/${postId}`, formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
 
             if (response.data.success) {
-                setSuccessMessage('Usuário atualizado com sucesso!');
+                setSuccessMessage('Conteúdo atualizado com sucesso!');
                 setErrorMessage('');
             } else {
                 setSuccessMessage('');
-                setErrorMessage('Erro ao atualizar usuário');
-                console.error('Erro ao atualizar usuário:', response.statusText);
+                setErrorMessage('Erro ao atualizar o conteúdo');
+                console.error('Erro ao atualizar o conteúdo:', response.statusText);
             }
         } catch (error) {
             setSuccessMessage('');
@@ -73,12 +88,12 @@ const EditPost = () => {
     };
 
     if (!post) {
-        return <p className="w-full h-screen flex justify-center items-start my-16 text-xl">Carregando informações do usuário...</p>;
+        return <p className="w-full h-screen flex justify-center items-start my-16 text-xl">Carregando informações do conteúdo...</p>;
     }
 
     return (
         // Estrutura do formulário de edição semelhante ao componente CreatePost
-        <div className="w-full h-screen flex justify-center items-start my-16">
+        <div className="w-full h-max flex justify-center items-start my-16">
             <div className="w-full max-w-md p-4">
                 <div className="border-b pb-4">
                     <h1 className="text-2xl font-semibold leading-7 text-gray-900 text-center">Edição de Conteúdo</h1>
