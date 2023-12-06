@@ -11,8 +11,8 @@ const EditUser = () => {
   const [editedUser, setEditedUser] = useState({
     name: '',
     email: '',
-    phone_number: '',
     cpf: '',
+    phone_number: '',
     permission: '',
   });
   const [successMessage, setSuccessMessage] = useState('');
@@ -123,12 +123,12 @@ const EditUser = () => {
           <span className="font-semibold">Tipo de Usuário:</span>
           <select
             name="permission_id"
-            value={editedUser.permission_id}
+            value={editedUser.permission}
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           >
-            <option value="2">Comum</option>
-            <option value="1">Admin</option>
+            <option value="2" selected={ editedUser.permission == 2 }>Comum</option>
+            <option value="1" selected={ editedUser.permission == 1 }>Admin</option>
           </select>
         </label>
         <button onClick={handleSave} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
