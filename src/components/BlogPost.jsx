@@ -21,9 +21,11 @@ const BlogPost = ({ post }) => {
           Ler mais
         </Link>
       </div>
+      {post.image && post.image.image && (
       <div className="w-32 h-22 ml-7">
         <img src={"data:image/jpg;base64," + post.image.image} alt="Imagem do post" className="w-32 h-22" style={{ objectFit: "fill" }}/> 
       </div>
+      )}
     </div>
   );
 };
