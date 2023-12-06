@@ -66,14 +66,13 @@ export const EditPost = () => {
 
         <div className="w-full h-max flex justify-center items-start my-16">
             <div className="w-full max-w-md p-4">
-                <div className="border-b  pb-4">
-                    {post && (
-                        <><h1 className="text-2xl font-semibold leading-7 text-gray-900 text-center">Edição de Conteúdo</h1><p className="mt-1 text-sm leading-6 text-gray-600 text-center">
+                <div className="border-b  pb-4">                  
+                        <h1 className="text-2xl font-semibold leading-7 text-gray-900 text-center">Edição de Conteúdo</h1><p className="mt-1 text-sm leading-6 text-gray-600 text-center">
                             Este conteúdo será exibido publicamente, então tenha cuidado com o que compartilha.
                         </p>
-                        </div>
-                        <div className="w-full h-max flex flex-col md:flex-column justify-between bg-white shadow-gray-500 shadow-md rounded px-8 pt-6 pb-8 mb-4">
-
+                </div>
+                {post && (
+                    <div className="w-full h-max flex flex-col md:flex-column justify-between bg-white shadow-gray-500 shadow-md rounded px-8 pt-6 pb-8 mb-4">
                         <form onSubmit={handleSubmit}>
                             <label className="flex flex-col mt-4">
                                 <span htmlFor="titulo">Título:</span>
@@ -167,15 +166,13 @@ export const EditPost = () => {
                                 </div>
                             )}
                         </form>
-
-                    </>
-                    )};
-                </div>
+                    </div>
+                )};
             </div>
+            
         </div>
     );
-};
-
+}
 
 
 
