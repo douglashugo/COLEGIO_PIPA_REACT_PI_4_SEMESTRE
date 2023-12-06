@@ -3,16 +3,35 @@ import { useParams } from 'react-router-dom';
 import { Input, TextareaAutosize } from "@mui/material";
 import axiosInstance from "../../../axiosConfig";
 
+function base64StringToFile(base64String, filename, mimeType) {
+    const byteCharacters = atob(base64String);
+    const byteNumbers = new Array(byteCharacters.length);
+
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: mimeType });
+
+    // Adicione um objeto File ao blob
+    const file = new File([blob], filename, { type: mimeType });
+    return file;
+}
+
 
 const EditPost = () => {
 
     const { id: postId } = useParams();
+    const [imagem, setImagem] = useState(null);
+    const [imageLoaded, setImageLoaded] = useState(false); // Novo estado para verificar se a imagem foi carregada
     const [post, setPost] = useState(null);
     const [postData, setPostData] = useState({
         title: '',
         description: '',
         category_id: '',
         tag_id: '',
+        image: null
     });
 
     const [successMessage, setSuccessMessage] = useState('');
@@ -32,14 +51,25 @@ const EditPost = () => {
                     title: data.data[0].title,
                     description: data.data[0].description,
                     category_id: data.data[0].category_id.toString(),
-                    tag_id: data.data[0].tag_id.toString()
-                });
+                    tag_id: data.data[0].tag_id.toString(),
+                    image: data.data[0].image ? data.data[0].image.image : null,
+            });
 
-            } catch (error) {
-                console.error('Erro ao buscar informações do post:', error);
-                // Lidar com erros...
+            if (data.data[0].image && data.data[0].image.image) {
+                try {
+                    const file = base64StringToFile(data.data[0].image.image, 'image.png', 'image/png');
+                    setImagem(file);
+                    setImageLoaded(true);
+                } catch (error) {
+                    console.error('Error converting image:', error);
+                }
+            } else {
+                setImageLoaded(false);
             }
-        };
+        } catch (error) {
+            console.error('Error fetching post data:', error);
+        }
+    };
 
         fetchPost();
     }, [postId]);
@@ -63,6 +93,21 @@ const EditPost = () => {
             formData.append("description", postData.description);
             formData.append("category_id", postData.category_id);
             formData.append("tag_id", postData.tag_id);
+
+            // Converta a imagem para um objeto File antes de anexar ao FormData
+            if (imageLoaded && imagem) {
+                formData.append("image", imagem);
+            } else {
+                const imageData = postData.image;
+                const file = base64StringToFile(imageData, 'image.png', 'image/png');
+
+                // Defina o estado 'imagem' com o novo arquivo
+                setImagem(file);
+
+                // Anexe o novo arquivo ao FormData
+                formData.append("image", file);
+            }
+
 
             const response = await axiosInstance.post(`https://colegiopipabackend.brunorisso.com/api/posts/update/${postId}`, formData,
                 {
@@ -90,6 +135,14 @@ const EditPost = () => {
     if (!post) {
         return <p className="w-full h-screen flex justify-center items-start my-16 text-xl">Carregando informações do conteúdo...</p>;
     }
+
+    const handleImageChange = (e) => {
+        const selectedImage = e.target.files[0];
+        if (selectedImage) {
+            setImagem(selectedImage);
+            setImageLoaded(true); // Define como verdadeiro se uma imagem for selecionada
+        }
+    };
 
     return (
         // Estrutura do formulário de edição semelhante ao componente CreatePost
@@ -150,6 +203,27 @@ const EditPost = () => {
                             </select>
                         </label>
 
+                        <label className="flex flex-col mt-6">
+                            <span htmlFor="imagem">Imagem:</span>
+                            <div className="flex items-center mt-2">
+                                <label htmlFor="upload" className="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded-md transition duration-300 ease-in-out">
+                                    Carregar imagem
+                                </label>
+                                <input
+                                    id="upload"
+                                    type="file"
+                                    accept="image/png,image/jpeg"
+                                    onChange={handleImageChange}
+                                    className="hidden"
+                                />
+                                {imageLoaded && imagem && (
+                                    <p className="ml-3 text-gray-600">
+                                        {imagem.name} carregado com sucesso!
+                                    </p>
+                                )}
+                            </div>
+                        </label>
+
                         <div className="w-full mt-6">
                             <button
                                 type="submit"
@@ -161,7 +235,6 @@ const EditPost = () => {
                             {successMessage && <p className="mt-5 text-center bg-green-200 text-green-800 p-3 rounded-md mb-5">{successMessage}</p>}
                             {errorMessage && <p className="error mt-5 text-center bg-red-200 text-red-800 p-3 rounded-md mb-5">{errorMessage}</p>}
                         </div>
-                        {/* Possíveis mensagens de erro ou sucesso... */}
                     </div>
                 </div>
             </div>
