@@ -15,6 +15,7 @@ import Register from "./pages/Register/Register"
 import UserManagement from "./pages/UserManagement/UserManagement";
 import UserDetails from './components/UserDetails';
 import EditUser from './pages/EditUser/EditUser';
+import EditPost from './pages/EditPost/EditPost';
 import Login from './pages/Login/login';
 import Dashboard from './pages/Dashboard/Dashboard';
 
@@ -39,6 +40,7 @@ function App() {
           <Route path="/dashboard-users" element={<UserManagement />} />
           <Route path="/user-details/:id" element={<UserDetails />} />
           <Route path="/user-edit/:id" element={<EditUser />} />
+          <Route path="/posts-edit/:id" element={<EditPost />} />
           <Route path="/dashboard-posts" element={<Dashboard />} />
         </Routes>
         <Footer />
