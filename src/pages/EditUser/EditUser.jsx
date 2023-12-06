@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from '../../../axiosConfig';
 
 
 const EditUser = () => {
@@ -10,7 +11,7 @@ const EditUser = () => {
   const [editedUser, setEditedUser] = useState({
     name: '',
     email: '',
-    telefone: '',
+    phone_number: '',
     cpf: '',
     permission: '',
   });
@@ -20,18 +21,18 @@ const EditUser = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`https://colegiopipabackend.brunorisso.com/api/users/${userId}`);
-        if (!response.ok) {
+        const response = await axiosInstance.get(`https://colegiopipabackend.brunorisso.com/api/users/${userId}`);
+        const data = await response.data;
+        if (!data.success) {
           throw new Error('Failed to fetch data');
         }
-        const data = await response.json();
-        setUser(data.data); // Definindo o usuário retornado pela API
+        setUser(data.data[0]); // Definindo o usuário retornado pela API
         setEditedUser({
-          name: data.data.name,
-          email: data.data.email,
-          telefone: data.data.phone_number,
-          cpf: data.data.cpf,
-          permission: data.data.permission_id.toString(), // Convertendo para string para o select
+          name: data.data[0].name,
+          email: data.data[0].email,
+          phone_number: data.data[0].phone_number,
+          cpf: data.data[0].cpf,
+          permission: data.data[0].permission_id.toString(), // Convertendo para string para o select
         });
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -50,16 +51,10 @@ const EditUser = () => {
 
   const handleSave = async () => {
     try {
-      // Aqui você deve enviar os dados editados para a API
-      const response = await fetch(`https://colegiopipabackend.brunorisso.com/api/users/update/${userId}`, {
-        method: 'PUT', // Ou outro método dependendo da sua API
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(editedUser),
-      });
+      console.log(editedUser);
+      const response = await axiosInstance.post(`https://colegiopipabackend.brunorisso.com/api/users/update/${userId}`, editedUser);
 
-      if (response.ok) {
+      if (response.data.success) {
         setSuccessMessage('Usuário atualizado com sucesso!');
         setErrorMessage('');
       } else {
@@ -77,7 +72,7 @@ const EditUser = () => {
   
 
   if (!user) {
-    return <p className="w-full h-screen flex justify-center items-start my-16">Carregando informações do usuário...</p>;
+    return <p className="w-full h-screen flex justify-center items-start my-16 text-xl">Carregando informações do usuário...</p>;
   }
 
   return (
@@ -109,7 +104,7 @@ const EditUser = () => {
           <input
             type="text"
             name="phone_number"
-            value={editedUser.telefone}
+            value={editedUser.phone_number}
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -120,7 +115,7 @@ const EditUser = () => {
             type="text"
             name="cpf"
             value={editedUser.cpf}
-            onChange={handleChange}
+            onChange={handleChange} 
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </label>
@@ -132,8 +127,8 @@ const EditUser = () => {
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           >
-            <option value="1">Comum</option>
-            <option value="2">Admin</option>
+            <option value="2">Comum</option>
+            <option value="1">Admin</option>
           </select>
         </label>
         <button onClick={handleSave} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">

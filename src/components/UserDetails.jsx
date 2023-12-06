@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import axiosInstance from '../../axiosConfig';
 
 const UserDetails = () => {
     const { id: userId } = useParams();
@@ -9,12 +10,12 @@ const UserDetails = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await fetch(`https://colegiopipabackend.brunorisso.com/api/users/${userId}`);
-                if (!response.ok) {
+                const response = await axiosInstance.get(`https://colegiopipabackend.brunorisso.com/api/users/${userId}`);
+                const data = await response.data;
+                if (!data.success) {
                     throw new Error('Failed to fetch data');
                 }
-                const data = await response.json();
-                setUser(data.data); 
+                setUser(data.data[0]); 
             } catch (error) {
                 console.error('Error fetching data:', error);
             }

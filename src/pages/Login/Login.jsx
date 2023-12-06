@@ -1,8 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Importando o axios para fazer requisições HTTP
-import { Navigate } from 'react-router-dom'; // Importando Navigate do react-router-dom
+import { Navigate, useNavigate } from 'react-router-dom'; // Importando Navigate do react-router-dom
+import AuthService from '../../components/AuthService';
 
 const Login = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            localStorage.getItem('permission_id');
+            navigate('/home');
+        }
+    }, []);
+
     const [formData, setFormData] = useState({
         email: '',
         senha: '',
@@ -24,24 +35,14 @@ const Login = () => {
         try {
             setError(''); // Resetando o erro caso tenha sido exibido anteriormente
 
-            // Fazendo a requisição GET para a API de usuários
-            const response = await axios.get('https://colegiopipabackend.brunorisso.com/api/users');
+            const response = await AuthService.login(formData.email, formData.senha);
+            console.log('Token: ', response.data);
 
-            // Verificando se a resposta da API é bem-sucedida e se os dados do usuário existem
-            if (response.data && response.data.data && response.data.data.length > 0) {
-                const usuarioEncontrado = response.data.data.find(
-                    (usuario) => usuario.email === formData.email
-                );
-
-                if (usuarioEncontrado) {
-                    console.log('Usuário encontrado:', usuarioEncontrado);
-                    setRedirectToHome(true); // Ativa o redirecionamento para '/home'
-                } else {
-                    setError('Usuário ou senha incorretos.');
-                    setShowErrorPopup(true); // Mostrando o pop-up de erro
-                }
+            if (response.success) {
+                console.log('Usuário logado');
+                setRedirectToHome(true); // Ativa o redirecionamento para '/home'
             } else {
-                setError('Usuário não encontrado.');
+                setError('Usuário ou senha incorretos.');
                 setShowErrorPopup(true); // Mostrando o pop-up de erro
             }
         } catch (error) {
@@ -72,7 +73,7 @@ const Login = () => {
         <div>
             <div className="w-full h-screen max-w-md mx-auto my-16">
                 <h1 className="text-2xl font-semibold leading-7 text-gray-900 text-center mb-4">Faça seu login</h1>
-                <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <form onSubmit={handleSubmit} className="bg-white shadow-gray-500 shadow-md rounded px-8 pt-6 pb-8 mb-4">
                     {showErrorPopup && (
                         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
                             <strong className="font-bold">Erro:</strong>

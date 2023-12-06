@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Input, TextareaAutosize } from "@mui/material";
 import axios from "axios";
+import axiosInstance from "../../../axiosConfig";
 
 
 
@@ -57,9 +58,6 @@ const CreatePost = () => {
     try {
       const formData = new FormData();
 
-      const imagemIdFixo = "1"; // Define o ID fixo para a imagem
-
-
       formData.append("title", titulo);
       formData.append("description", descricao);
 
@@ -71,12 +69,12 @@ const CreatePost = () => {
       const tagId = tagsParaId[tagsSelecionada];
       formData.append("tag_id", tagId || "");
       
-      formData.append("image_id", imagemIdFixo ? imagemIdFixo : null);
+      formData.append("image", imagem ? imagem : null);
       //formData.append("image", imagem);
             
-      await axios.post("https://colegiopipabackend.brunorisso.com/api/posts", formData, {
+      await axiosInstance.post("https://colegiopipabackend.brunorisso.com/api/posts", formData, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       });
 
@@ -103,7 +101,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="w-full h-screen flex justify-center items-start my-16">
+    <div className="w-full h-max flex justify-center items-start my-16">
       <div className="w-full max-w-md p-4">
         <div className="border-b  pb-4">
           <h1 className="text-2xl font-semibold leading-7 text-gray-900 text-center">Cadastro de Conteúdo</h1>
@@ -191,10 +189,10 @@ const CreatePost = () => {
               </div>
             </label>
 
-            <div className="w-full mt-6 flex justify-center ">
+            <div className="w-full mt-6">
               <button
                 type="submit"
-                className="mt-5 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out"
+                className="mt-1 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out"
               >
                 Publicar
               </button>
