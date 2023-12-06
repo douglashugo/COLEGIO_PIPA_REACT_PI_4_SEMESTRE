@@ -7,8 +7,9 @@ const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');;
+        const token = localStorage.getItem('token');
         if (token) {
+            localStorage.getItem('permission_id');
             navigate('/home');
         }
     }, []);

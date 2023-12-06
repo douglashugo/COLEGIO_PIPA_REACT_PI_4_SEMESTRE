@@ -72,7 +72,7 @@ const EditUser = () => {
   
 
   if (!user) {
-    return <p className="w-full h-screen flex justify-center items-start my-16">Carregando informações do usuário...</p>;
+    return <p className="w-full h-screen flex justify-center items-start my-16 text-xl">Carregando informações do usuário...</p>;
   }
 
   return (

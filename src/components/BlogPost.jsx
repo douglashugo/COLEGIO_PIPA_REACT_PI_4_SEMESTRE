@@ -10,7 +10,7 @@ const BlogPost = ({ post }) => {
   };
 
   return (
-    <div className="flex border-b pb-4 mb-8">
+    <div className="flex border-b pb-4 mb-14">
       <div className="flex-1">
         <h2 className="mt-4 text-lg font-semibold leading-7 text-gray-900 break-all">{post.title}</h2>
         <p style={descriptionStyle} className="mt-2 text-sm leading-6 text-gray-600 break-all">{post.description}</p>
@@ -21,8 +21,8 @@ const BlogPost = ({ post }) => {
           Ler mais
         </Link>
       </div>
-      <div className="flex-shrink-0 ml-4">
-        <img src={"data:image/jpg;base64," + post.image.image} alt="Imagem do post" className="w-40 h-25" /> 
+      <div className="w-32 h-22 ml-7">
+        <img src={"data:image/jpg;base64," + post.image.image} alt="Imagem do post" className="w-32 h-22" style={{ objectFit: "fill" }}/> 
       </div>
     </div>
   );

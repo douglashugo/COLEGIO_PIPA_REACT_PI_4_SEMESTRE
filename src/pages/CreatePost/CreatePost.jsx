@@ -69,12 +69,12 @@ const CreatePost = () => {
       const tagId = tagsParaId[tagsSelecionada];
       formData.append("tag_id", tagId || "");
       
-      formData.append("image_id", imagem ? imagem : null);
+      formData.append("image", imagem ? imagem : null);
       //formData.append("image", imagem);
             
       await axiosInstance.post("https://colegiopipabackend.brunorisso.com/api/posts", formData, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       });
 
