@@ -54,20 +54,18 @@ const Register = () => {
 
 
             try {
-                const response = await axiosInstance.post('https://colegiopipabackend.brunorisso.com/api/users', requestBody);
-                const data = response.data;
-
-                if (data.success) {
-                    // Lógica para lidar com sucesso (ex: redirecionamento, exibição de mensagem)
-                    setCadastroSucesso(true); // Define o estado para mostrar a mensagem de sucesso
-                    setErroCadastro(false);
-                    console.log('Usuário cadastrado com sucesso!');
-                } else {
-                    // Lógica para lidar com erro na requisição
-                    setErroCadastro(true);
-                    setCadastroSucesso(false);
-                    console.error('Erro ao cadastrar usuário:', response.statusText);
-                }
+                await axiosInstance
+                    .post('https://colegiopipabackend.brunorisso.com/api/users', requestBody)
+                    .then(response => {
+                        setCadastroSucesso(true); // Define o estado para mostrar a mensagem de sucesso
+                        setErroCadastro(false);
+                        console.log('Usuário cadastrado com sucesso!');
+                    })
+                    .catch(error => {
+                        setErroCadastro(true);
+                        setCadastroSucesso(false);
+                        console.error('Erro ao cadastrar usuário: ', error);
+                    });
             } catch (error) {
                 // Lógica para lidar com erro de rede ou outros erros
                 console.error('Erro ao realizar a requisição:', error);
@@ -78,8 +76,8 @@ const Register = () => {
             // Mapeamento de tipos de usuário para IDs correspondentes
             // Certifique-se de ter adicionado todas as categorias conforme necessário
             const permissionId = {
-                Comum: 2,
                 Admin: 1,
+                Comum: 2,
                 // Adicione outras categorias conforme necessário
             };
             return permissionId[tipoUsuario] || null; // Retornar null ou outro valor padrão para lidar com casos não mapeados

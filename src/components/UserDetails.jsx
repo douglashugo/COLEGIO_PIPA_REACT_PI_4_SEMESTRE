@@ -24,7 +24,7 @@ const UserDetails = () => {
     }, [userId]);
 
     const getUserType = (permissionId) => {
-        return permissionId === 1 ? 'Comum' : permissionId === 2 ? 'Admin' : 'Não definido';
+        return permissionId === 1 ? 'Admin' : permissionId === 2 ? 'Comum' : 'Não definido';
       };
 
     return (

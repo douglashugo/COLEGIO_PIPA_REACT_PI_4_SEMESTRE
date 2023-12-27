@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import AuthService from './src/components/AuthService';
 
 const axiosInstance = axios.create();
 
@@ -22,6 +22,7 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     if (error.response.status === 401) {
+      AuthService.logout();
       window.location.href = '/';
     } else {
       return Promise.reject(error);
